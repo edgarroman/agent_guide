@@ -123,12 +123,12 @@ When in doubt: search the copied files for `yarn`, `expo`, `gradecorner`, `aspen
 
 The primary target is **Cursor**. The same files work, with varying levels of automation, in other agents.
 
-| Tool | What it reads automatically | What you need to do |
-|---|---|---|
-| **Cursor** | `AGENTS.md` (always-on), `.cursor/rules/*.mdc` (glob-scoped) | Nothing — drop-in. |
-| **OpenAI Codex / codex-cli** | `AGENTS.md` (always-on) | Nothing. `.cursor/rules/*.mdc` are ignored — embed key rules inline in `AGENTS.md` if you want them always-on for Codex. |
-| **Claude Code** | `CLAUDE.md` from repo root | `ln -s AGENTS.md CLAUDE.md` (or duplicate the file). Claude Code has no glob-loader equivalent — either reference `agents/**.md` from `CLAUDE.md` and rely on on-demand loads, or inline the rules. |
-| **Aider, Cline, Continue, etc.** | Varies; most accept a system-prompt file or read `AGENTS.md` | Point them at `AGENTS.md`; they'll discover `agents/**` via grep. |
+| Tool                             | What it reads automatically                                  | What you need to do                                                                                                                                                                                 |
+| -------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Cursor**                       | `AGENTS.md` (always-on), `.cursor/rules/*.mdc` (glob-scoped) | Nothing — drop-in.                                                                                                                                                                                  |
+| **OpenAI Codex / codex-cli**     | `AGENTS.md` (always-on)                                      | Nothing. `.cursor/rules/*.mdc` are ignored — embed key rules inline in `AGENTS.md` if you want them always-on for Codex.                                                                            |
+| **Claude Code**                  | `CLAUDE.md` from repo root                                   | `ln -s AGENTS.md CLAUDE.md` (or duplicate the file). Claude Code has no glob-loader equivalent — either reference `agents/**.md` from `CLAUDE.md` and rely on on-demand loads, or inline the rules. |
+| **Aider, Cline, Continue, etc.** | Varies; most accept a system-prompt file or read `AGENTS.md` | Point them at `AGENTS.md`; they'll discover `agents/**` via grep.                                                                                                                                   |
 
 The cross-cutting principle: `AGENTS.md` is the lowest-common-denominator entry point. Keep it short, make it point at `agents/` for substance, and most agents will follow the links.
 
@@ -143,9 +143,3 @@ These come from `AGENTS.md` and `agents/commands/` and are worth keeping even if
 - **Plan digest at month rollover.** `cmd_plan_digest.md` compacts the previous month into `_digest.md`, keeping active investigations and pointing at git history for the rest.
 - **Git safety.** `AGENTS.md` includes a strict policy that agents must not run mutating git commands without explicit per-turn approval. Keep this verbatim if you want the same behavior.
 - **PR template.** `.github/PULL_REQUEST_TEMPLATE.md` matches the commit / PR style described in `AGENTS.md`. GitHub picks it up automatically.
-
----
-
-## License
-
-TODO — add a `LICENSE` file before publishing. This staging area was extracted from a private project; pick a license (MIT, Apache-2.0, or proprietary) before pushing to a public remote.
