@@ -1,0 +1,8 @@
+---
+description: Testing guidelines for Jest and React Native Testing Library
+globs: "**/*.test.{ts,tsx,js,jsx}"
+---
+
+Follow the testing guidelines in `agents/common/testing.md`.
+
+Use Jest and React Native Testing Library. Test behaviour, not implementation details.

@@ -1,0 +1,10 @@
+---
+description: TypeScript coding standards and functional programming patterns
+globs: "**/*.{ts,tsx}"
+---
+
+Follow the TypeScript coding standards defined in `agents/common/typescript.md`.
+
+For project-specific conventions (architecture, state management, localisation, gradebook systems), also follow `agents/project/gradecorner.md`.
+
+For security practices (input validation, secure storage, API communication), follow `agents/common/security.md`.

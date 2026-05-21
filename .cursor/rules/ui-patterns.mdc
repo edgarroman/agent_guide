@@ -1,0 +1,11 @@
+---
+description: UI theming, component usage, safe areas, and screen structure
+globs: "src/screens/**/*.{ts,tsx}, src/uiElements/**/*.{ts,tsx}"
+---
+
+Follow the UI patterns and theming rules in `agents/project/ui-patterns.md`.
+
+Key reminders:
+- Use `GCView` and `GCText` instead of raw `View` and `Text`
+- Use `SafeAreaView` from `react-native-safe-area-context` (not the deprecated core version)
+- Use react-native-paper for new core components when `uiElements` doesn't have a suitable option
