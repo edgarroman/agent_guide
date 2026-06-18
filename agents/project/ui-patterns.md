@@ -4,11 +4,11 @@
 
 When you need a component, work through this table top to bottom and stop at the first row that matches:
 
-| Question                                                                   | → Use                                                                                  |
-| -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Does `src/uiElements/` already export something for this?                  | The existing uiElement (e.g. `GCView`, `GCText`, `GCAppHeader`, `GCSafeAreaView`)      |
-| Is this a primitive that needs a theme? (text, container, button, surface) | A new wrapper in `src/uiElements/` over the RN Paper equivalent                        |
-| None of the above?                                                         | Raw React Native, kept local to the screen                                             |
+| Question                                                                   | → Use                                                                             |
+| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| Does `src/uiElements/` already export something for this?                  | The existing uiElement (e.g. `GCView`, `GCText`, `GCAppHeader`, `GCSafeAreaView`) |
+| Is this a primitive that needs a theme? (text, container, button, surface) | A new wrapper in `src/uiElements/` over the RN Paper equivalent                   |
+| None of the above?                                                         | Raw React Native, kept local to the screen                                        |
 
 **Never import `react-native-paper` outside `src/uiElements/`.** All Paper components must be wrapped in a uiElement first — this keeps theming, accessibility defaults, and Paper version upgrades centralized in one folder. If you need a Paper component that isn't wrapped yet, add the wrapper in `src/uiElements/` (or extend an existing one) before consuming it. Most existing primitives (`GCText`, `GCButton`, `GCCard`, `GCDialog`, `GCSwitch`, `GCSegmentedControl`, `GCTextInput`, `GCCheckbox`, `GCAccordion`, `GCSheet`, `GCLoadingSpinner`, `GCSyncStatus`) are already Paper wrappers.
 
@@ -29,12 +29,12 @@ Use Flexbox for layout and `useWindowDimensions` for screen-size-dependent value
 
 ## Choosing a Safe Area API
 
-| Question                                          | → Use                                                                                                                  |
-| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Top-level layout / screen wrapper?                | A safe-area-aware uiElement (`GCAppHeader`, or `GCSafeAreaView` from `@/uiElements/layout/GCSafeAreaView`)              |
-| Need to opt out of one inset on a screen wrapper? | `GCSafeAreaView` with `disableTop` / `disableBottom` / `disableLeft` / `disableRight` props                            |
-| Need specific inset values for custom spacing?    | `useSafeAreaInsets` / `useSafeAreaFrame` from `react-native-safe-area-context`                                         |
-| Scrollable content near a notch/home indicator?   | A safe-area-aware wrapper, or `contentInsetAdjustmentBehavior` on the ScrollView                                       |
+| Question                                          | → Use                                                                                                      |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Top-level layout / screen wrapper?                | A safe-area-aware uiElement (`GCAppHeader`, or `GCSafeAreaView` from `@/uiElements/layout/GCSafeAreaView`) |
+| Need to opt out of one inset on a screen wrapper? | `GCSafeAreaView` with `disableTop` / `disableBottom` / `disableLeft` / `disableRight` props                |
+| Need specific inset values for custom spacing?    | `useSafeAreaInsets` / `useSafeAreaFrame` from `react-native-safe-area-context`                             |
+| Scrollable content near a notch/home indicator?   | A safe-area-aware wrapper, or `contentInsetAdjustmentBehavior` on the ScrollView                           |
 
 Wrap the app in `SafeAreaProvider` once at the root. Do **not** import `SafeAreaView` from `react-native` core — it was deprecated in SDK 54.
 
@@ -62,7 +62,7 @@ Wrap the app in `SafeAreaProvider` once at the root. Do **not** import `SafeArea
 - Use Expo's `SplashScreen` (or the managed App Loading flow) to keep startup responsive
 - Prefer `expo-image` with WebP assets, defined dimensions, and lazy loading for media-heavy views
 - Split non-critical UI into lazily loaded chunks with `React.lazy`/`Suspense` when it reduces initial render cost
-- Profile components with Expo and React Native dev tools; memoize or use `useMemo`/`useCallback` to avoid unnecessary re-renders
+- Profile components with Expo and React Native dev tools, and reach for `useMemo`/`useCallback` only when profiling shows a real cost or the value feeds a `memo`-wrapped child or another hook's dependency—not as a default
 
 ## Screen Structure
 

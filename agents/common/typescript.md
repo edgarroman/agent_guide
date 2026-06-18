@@ -65,3 +65,5 @@
   - Gate side-effects and UI usage with real conditions
 
 Example: call useSync(accountId || '') always; only refresh() and render when accountId is truthy.
+
+- Follow the React team's guidance on proper hook usage: https://react.dev/learn/you-might-not-need-an-effect (do not use `useEffect` for state derivable during render) and https://react.dev/reference/react/hooks (when memoization with `useCallback`/`useMemo` is actually warranted)
