@@ -22,6 +22,10 @@ and avoiding broken references.
    - Mark retained active plans explicitly.
 4. Delete compacted plan files only after anchors are resolved.
    - Keep `_digest.md` and active retained plans.
+   - When deleting a compacted plan `N-…md`, also delete its sibling
+     `plans/YYYY-MM/<N>-assets/` directory if present (explicitly saved
+     plan images only; see `cmd_plan.md`). Absent `-assets` dirs are normal.
+     Do not leave orphan `-assets` folders.
    - Do not delete a plan that is still referenced unless the reference is an
      intentional active-plan anchor.
 5. Verify with:

@@ -16,7 +16,7 @@ Lines of code are a cost, not an output. Do not treat volume, file count, or bre
 
 - Before writing a utility, search `/src/utils`, `/src/uiElements`, and the relevant functional-area directory for something that already does the job. Grep for likely names and for the verbs in the task description
 - If an existing utility covers 80% of the need, prefer calling it and handling the delta locally over generalizing it
-- Check `agents/project/gradecorner.md` and `agents/project/ui-patterns.md` for documented patterns before inventing one; consult specific `/docs/*.md` files only when those rules point you to one. Flag discrepancies between docs and code rather than silently diverging
+- Check `agents/project/` (especially `ui-patterns.md` when present) for documented patterns before inventing one; consult specific `/docs/*.md` files only when those rules point you to one. Flag discrepancies between docs and code rather than silently diverging
 - When unsure whether something exists, ask or search — do not assume it doesn't and write a new one
 
 ## Tolerance for Near-Duplicates

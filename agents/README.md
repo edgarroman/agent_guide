@@ -2,11 +2,11 @@
 
 Coding standards and reusable prompts for AI agents working on this project.
 
-| Directory    | Contents                                                  |
-|--------------|-----------------------------------------------------------|
-| `common/`    | Language-level rules: TypeScript, testing, security       |
-| `project/`   | GradeCorner-specific: architecture, UI patterns           |
-| `commands/`  | Reusable prompts: planning, code review, documentation    |
+| Directory | Contents |
+| --- | --- |
+| `common/` | Language-level rules: TypeScript, testing, security, minimalism |
+| `project/` | Project-specific: architecture, UI patterns (rewrite on install) |
+| `commands/` | Reusable prompts: planning, code review, documentation |
 
 `.cursor/rules/*.mdc` files use globs to load the right rules for the files being edited. See `AGENTS.md` at the repo root for the full project overview.
 

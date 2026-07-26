@@ -1,5 +1,7 @@
 # UI Patterns and Theming
 
+> **Portable / new projects use `Ui*` primitives** under `src/uiElements/`. This sample still documents GradeCorner’s historical `GC*` layer. When adapting the guide into a new app, rename to `Ui*` and treat `GC*` as obsolete for that install.
+
 ## Choosing a Component
 
 When you need a component, work through this table top to bottom and stop at the first row that matches:

@@ -5,6 +5,6 @@ globs: "**/*.{ts,tsx}"
 
 Follow the TypeScript coding standards defined in `agents/common/typescript.md`.
 
-For project-specific conventions (architecture, state management, localisation, gradebook systems), also follow `agents/project/gradecorner.md`.
+For project-specific conventions (architecture, state management, localization), also follow the rules under `agents/project/` (rewrite the sample project file for your app on install).
 
 For security practices (input validation, secure storage, API communication), follow `agents/common/security.md`.

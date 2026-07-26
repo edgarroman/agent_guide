@@ -4,6 +4,10 @@ A portable set of AI-agent rules and reusable command prompts, plus the glue tha
 
 This guide was extracted from a real Expo / React-Native project (GradeCorner). Most files are concrete, working examples rather than blank templates — adapt them to your stack rather than starting from zero. The structural conventions (where files live, how `.cursor/rules` loads them, how `/plans` is organized) are the reusable part.
 
+**Package manager:** prefer **bun** for new projects and for command examples in this repo. Do **not** migrate an existing yarn (or npm) install just to match the guide — keep that project’s lockfile and tooling; only swap command strings when the project already uses bun.
+
+**UI primitives:** new projects use the **`Ui*`** prefix under `src/uiElements/`. GradeCorner sample files under `agents/project/` may still show historical `GC*` naming; that is not the portable default for new installs.
+
 ---
 
 ## Repo Layout
@@ -26,7 +30,7 @@ This guide was extracted from a real Expo / React-Native project (GradeCorner). 
 │   │   ├── security.md
 │   │   ├── testing.md
 │   │   └── typescript.md
-│   ├── project/                    # App-specific rules (these are the GradeCorner-specific files)
+│   ├── project/                    # App-specific rules (GradeCorner samples — rewrite on install)
 │   │   ├── gradecorner.md
 │   │   └── ui-patterns.md
 │   └── commands/                   # Reusable prompts invoked by the user (e.g. "follow cmd_plan.md")
@@ -36,9 +40,9 @@ This guide was extracted from a real Expo / React-Native project (GradeCorner). 
 │       ├── cmd_review_code.md
 │       └── cmd_write_docs.md
 └── plans/
-    ├── _template.md                # Blank skeleton matching cmd_plan.md's required structure
+    ├── _template.md                # Optional blank skeleton; cmd_plan.md is authoritative
     └── 2026-05/
-        └── 0001-example-feature.md # Short worked example showing the plan format
+        └── 0010-example-feature.md # Short worked example (skip-by-10 numbering)
 ```
 
 ---
@@ -46,11 +50,11 @@ This guide was extracted from a real Expo / React-Native project (GradeCorner). 
 ## How The Pieces Fit Together
 
 - **`AGENTS.md`** is the always-on entry point. Cursor, OpenAI Codex / codex-cli, and most modern agents read it on every turn. Keep it short and structural — point at `agents/**` for the substance.
-- **`agents/common/`** holds language-level rules that aren't project-specific (TypeScript style, testing approach, security defaults, the minimalism / reuse guidelines).
+- **`agents/common/`** holds language-level rules that aren't project-specific (TypeScript style, testing approach, security defaults, the minimalism / reuse guidelines). Pointers stay at the `agents/project/` directory, not a hard-coded project filename.
 - **`agents/project/`** holds project-specific rules (architecture, state management, component library conventions). Expect to rewrite these per project.
 - **`agents/commands/`** holds reusable prompts. The user invokes them by name ("use `cmd_plan.md` to spec this out") rather than the agent loading them automatically.
 - **`.cursor/rules/*.mdc`** are thin glob-scoped loaders. When Cursor sees a file matching the `globs:` frontmatter, it loads the referenced `agents/**.md` into context. This is what makes per-file-type guidance fire without bloating every prompt.
-- **`plans/YYYY-MM/`** is where `cmd_plan.md` writes specs. Filenames are `NNNN-descriptive-name.md` with `NNNN` zero-padded and monotonically increasing within the project (not within the month).
+- **`plans/YYYY-MM/`** is where `cmd_plan.md` writes specs. Filenames are `NNNN-descriptive-name.md` with `NNNN` zero-padded. Numbering is **per-month**. Standalone plans **round up to the next ten**; sub-plans fill the slots between tens. See `agents/commands/cmd_plan.md`. `plans/_template.md` is an optional skeleton; if it disagrees with `cmd_plan.md`, trust the command.
 
 ---
 
@@ -104,18 +108,29 @@ ln -s agent-guide/.cursor/rules .cursor/rules
 
 Everything in this repo is real working content, not generic boilerplate. Expect to edit:
 
-- **`AGENTS.md`** — `yarn` commands, `src/app/` / `src/uiElements/` / `src/gradeBookSystems/` paths, references to `/docs/TimeStampHandlingGuide.md` and `/docs/LoggingGuide.md`. Replace with your stack.
-- **`agents/project/gradecorner.md`** — entirely GradeCorner-specific (Drizzle + SQLite, expo-router, React Query, i18next, the gradebook integration layer). Rewrite for your architecture; the section headings (Architecture, Folder Structure, State Management, Localization, Workflow) transfer well.
-- **`agents/project/ui-patterns.md`** — GradeCorner-specific component layer (`GCView`, `GCText`, `react-native-paper` wrappers, safe-area handling). Replace with your component-library conventions.
-- **`agents/common/minimalism.md`** — mostly generic, but references `/src/utils`, `/src/uiElements`, `agents/project/gradecorner.md`, and `agents/project/ui-patterns.md` by name. Update the paths to match your layout.
+- **`AGENTS.md`** — paths under `src/`, references to `/docs/TimeStampHandlingGuide.md` and `/docs/LoggingGuide.md`, and any sample feature-area folders. Command examples prefer bun; if the project still uses yarn, substitute yarn scripts (do not migrate the package manager just to match this guide).
+- **`agents/project/gradecorner.md`** (rename) — entirely GradeCorner-specific sample. Rewrite for your architecture; the section headings (Architecture, Folder Structure, State Management, Localization, Workflow) transfer well.
+- **`agents/project/ui-patterns.md`** — replace GradeCorner’s historical `GC*` / Paper sample with your `Ui*` conventions.
+- **`agents/common/minimalism.md`** — mostly generic; it already points at `agents/project/` rather than a named project file. Update `/src/utils` / `/src/uiElements` paths if your layout differs.
 - **`agents/common/typescript.md`** — generic TypeScript rules, but assumes Expo / React-Native / Expo Router (default exports allowed only in `src/app/`, `withRouteData`, etc.). Strip Expo-isms if you're not on Expo.
 - **`agents/common/testing.md`** — assumes Jest + React Native Testing Library + Detox. Swap for your test stack.
 - **`agents/common/security.md`** — assumes `react-native-encrypted-storage`, Zod, Sentry. Mostly transferable; swap the storage primitive.
-- **`agents/commands/cmd_plan.md`** and **`cmd_eval.md`** — reference `/src/utils`, `/src/uiElements`, `/docs`, `agents/project/gradecorner.md`, `agents/project/ui-patterns.md`. Update paths so the prompts point at the right directories in your repo.
+- **`agents/commands/cmd_plan.md`** and **`cmd_eval.md`** — reference `/src/utils`, `/src/uiElements`, `/docs`, `agents/project/ui-patterns.md`. Update paths so the prompts point at the right directories in your repo.
 - **`.cursor/rules/*.mdc`** — `globs:` patterns assume `src/screens/`, `src/uiElements/`. Adjust to your folder layout.
-- **`.github/PULL_REQUEST_TEMPLATE.md`** — references `yarn test` / `yarn lint`. Swap for your commands.
+- **`.github/PULL_REQUEST_TEMPLATE.md`** — prefers `bun run test` / `bun run lint`. Yarn projects substitute their scripts.
 
-When in doubt: search the copied files for `yarn`, `expo`, `gradecorner`, `aspen`, `GC`, `/src/`, `/docs/` — these are the heavy markers.
+When in doubt: search the copied files for `yarn`, `expo`, `gradecorner`, `aspen`, `GC`, `/src/`, `/docs/` — these are the heavy markers. For new UI work, prefer `Ui*` over any remaining `GC*` samples.
+
+---
+
+## What Is Portable vs Project-Owned
+
+When syncing improvements back into this guide (or pulling the guide into an app):
+
+- **Portable** — `agents/commands/*`, `agents/common/*` (keep `agents/project/` directory pointers only), plan numbering / images / `NEW UI:` / `Ui*`, Git Safety including the Cloud Agent Exception, `plans/_template.md`, PR template shape, prefer-bun-don’t-migrate-yarn.
+- **Project-owned** — `AGENTS.md` structure and paths, substance of `agents/project/*`, `.cursor/rules` globs and reminder bullets tuned per app, plus extras (MCP, simulator rules, `CLAUDE.md`, etc.).
+
+Typical sync mechanism: a local clone edited and pushed to this repo (copy/subtree/submodule are install options for consumers).
 
 ---
 
@@ -138,8 +153,9 @@ The cross-cutting principle: `AGENTS.md` is the lowest-common-denominator entry 
 
 These come from `AGENTS.md` and `agents/commands/` and are worth keeping even if you rewrite the substance:
 
-- **Specs live under `/plans/YYYY-MM/`.** Filenames are `NNNN-descriptive-name.md` (zero-padded, monotonic). See `agents/commands/cmd_plan.md` for the format and `plans/2026-05/0001-example-feature.md` for a worked example.
+- **Specs live under `/plans/YYYY-MM/`.** Per-month four-digit slots. Standalone plans round up to the next ten; sub-plans fill intervening slots. See `agents/commands/cmd_plan.md` and `plans/2026-05/0010-example-feature.md`.
+- **Plan images default off disk.** Persist under `plans/YYYY-MM/<N>-assets/` only when the user explicitly asks.
 - **Plan eval pass.** After writing a plan with `cmd_plan.md`, run `cmd_eval.md` to critique and refine it into a v2. The two-pass workflow catches assumed file references and lets you mark each as `[verified]` vs `[assumed]`.
-- **Plan digest at month rollover.** `cmd_plan_digest.md` compacts the previous month into `_digest.md`, keeping active investigations and pointing at git history for the rest.
-- **Git safety.** `AGENTS.md` includes a strict policy that agents must not run mutating git commands without explicit per-turn approval. Keep this verbatim if you want the same behavior.
+- **Plan digest at month rollover.** `cmd_plan_digest.md` compacts the previous month into `_digest.md`, keeping active investigations and pointing at git history for the rest (deleted plan text remains recoverable via `git log`).
+- **Git safety.** `AGENTS.md` includes a strict policy that agents must not run mutating git commands without explicit per-turn approval, plus a Cloud Agent Exception for Cursor cloud PR flows. Keep this if you want the same behavior.
 - **PR template.** `.github/PULL_REQUEST_TEMPLATE.md` matches the commit / PR style described in `AGENTS.md`. GitHub picks it up automatically.

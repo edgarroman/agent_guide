@@ -2,9 +2,15 @@
 
 <!--
 Blank template matching the structure required by agents/commands/cmd_plan.md.
-Copy this file to plans/YYYY-MM/<N>-<descriptive-name>.md where N is the next
-available number (zero-padded, monotonic across the whole project — not per
-month). Delete these HTML comments before committing.
+Copy this file to plans/YYYY-MM/<N>-<descriptive-name>.md where N is a
+four-digit numeric slot in the current month folder only.
+
+Standalone plans: round the month's max prefix UP to the next multiple of 10
+(e.g. max 0063 → 0070). Sub-plans fill the slots between tens after a named
+parent (0060 → 0061, 0062, …). See cmd_plan.md. cmd_plan.md is authoritative
+if this skeleton and the command disagree.
+
+Delete these HTML comments before committing.
 -->
 
 ## Description
