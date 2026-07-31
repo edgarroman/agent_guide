@@ -64,6 +64,20 @@ one-line reason. Skip trivial choices. -->
        Phase 2B — API / integration
      If it's not big enough to need phases, delete this section. -->
 
+## Expected outcome
+
+<!-- 3-5 present-tense bullets: observable end state after implementation
+     (what a person using the app can see or do that differs). For refactors /
+     data-only / dev-only work, describe the code or data end state instead.
+     Close with one line naming what deliberately stays the same. Not success
+     criteria — no metrics, checkboxes, verification steps, or timeline.
+     Every bullet must be traceable to the Algorithm / Decision Points above
+     and to the user's ask. Keep under ~120 words. -->
+
+-
+-
+- Unchanged: <what deliberately stays the same>
+
 ## Confidence and Open Questions
 
 - **High confidence** — <claims grounded in files you read and patterns you verified>

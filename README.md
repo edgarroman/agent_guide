@@ -155,6 +155,7 @@ These come from `AGENTS.md` and `agents/commands/` and are worth keeping even if
 
 - **Specs live under `/plans/YYYY-MM/`.** Per-month four-digit slots. Standalone plans round up to the next ten; sub-plans fill intervening slots. See `agents/commands/cmd_plan.md` and `plans/2026-05/0010-example-feature.md`.
 - **Plan images default off disk.** Persist under `plans/YYYY-MM/<N>-assets/` only when the user explicitly asks.
+- **Plans close with Expected outcome, then Confidence.** `cmd_plan.md` requires a short observable end-state section before the confidence buckets; `cmd_eval.md` checks outcome conformance (missing section, unproduced claims, missing ask coverage, scope creep).
 - **Plan eval pass.** After writing a plan with `cmd_plan.md`, run `cmd_eval.md` to critique and refine it into a v2. The two-pass workflow catches assumed file references and lets you mark each as `[verified]` vs `[assumed]`.
 - **Plan digest at month rollover.** `cmd_plan_digest.md` compacts the previous month into `_digest.md`, keeping active investigations and pointing at git history for the rest (deleted plan text remains recoverable via `git log`).
 - **Git safety.** `AGENTS.md` includes a strict policy that agents must not run mutating git commands without explicit per-turn approval, plus a Cloud Agent Exception for Cursor cloud PR flows. Keep this if you want the same behavior.

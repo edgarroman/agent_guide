@@ -4,7 +4,7 @@ The user will provide a feature description. Your job is to:
 2. Research the files and functions that need to be changed to implement the feature. Open the files you reference; do not infer from naming alone.
 3. Before adding new code, audit `/src/utils`, `/src/uiElements`, and the relevant functional-area directory for existing utilities, components, or patterns that cover part of the work. Note what can be reused, extended, or deleted. Per `minimalism.md`, prefer subtractive or additive-and-isolated changes over cross-cutting rewrites.
 4. Review project documentation `/docs` for any relevant guidelines and call out conflicts between the plan and documented patterns.
-5. Avoid any product manager style sections (no success criteria, timeline, migration, etc).
+5. Avoid any product manager style sections (no success criteria, timeline, migration, etc). The required **Expected outcome** closing section (see the document structure below) is the sole exception and is deliberately narrow: observable end state, nothing else.
 6. Include specific and verbatim details from the user's prompt to ensure the plan is accurate.
 
 This is strictly a technical requirements document that should:
@@ -14,7 +14,11 @@ This is strictly a technical requirements document that should:
 3. Explain any algorithms that are used step-by-step.
 4. Surface real decision points. When the plan picks one of multiple reasonable approaches (e.g., React Query vs. local state, new screen vs. extending an existing one, new utility vs. reusing one), note the choice, the rejected alternative, and the one-line reason. Do not surface trivial choices.
 5. If necessary, break up the work into logical phases. Ideally this should be done with an initial "data layer" phase that defines the types and db changes that need to run, followed by N phases that can be done in parallel (e.g. Phase 2A - UI, Phase 2B - API). Only include phases if it's a REALLY big feature.
-6. End with a short **Confidence and open questions** section with three buckets:
+6. End with these two sections, in this order:
+
+   **Expected outcome** — 3-5 bullets, present tense, describing the observable end state once the plan is implemented: what a person using the app can see or do that differs. Close with one line naming what deliberately stays the same. Always include this section. When the change has no user-visible effect (refactor, data-layer-only phase, dev-only instrument), describe the end state at the code or data level instead (e.g. "one JS gate controls list row fill"). This is a restatement, not new scope — every bullet must be traceable to something specified above and to the user's ask; if you cannot trace it, the plan body is incomplete. This is **not** success criteria: no metrics, no checkboxes, no verification steps (those belong in Tests/Verification), no timeline. Keep it under ~120 words.
+
+   **Confidence and open questions** — three buckets:
    - **High confidence** — claims grounded in files you read and patterns you verified.
    - **Medium confidence** — algorithms, data flows, or integration points you reasoned about but did not fully trace.
    - **Open questions** — genuine forks the user needs to resolve before implementation. Do not invent uncertainty; if there are none, say so.

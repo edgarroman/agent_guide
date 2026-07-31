@@ -15,6 +15,7 @@ Read the plan in full, then read the files and functions it references to verify
 7. **Reuse and minimalism gaps** - existing utilities, components, or patterns in `/src/utils`, `/src/uiElements`, or the relevant functional-area directory that the plan reinvents; new abstractions introduced before a second caller exists; net-additive changes where a subtractive option was available. Reference `minimalism.md` when calling these out. **Explicitly check whether the plan introduces a new UI component, construct, or pattern** (a new `Ui*` primitive or a novel interaction/layout/navigation pattern rather than a composition of existing primitives); if so, verify it is flagged as a potential outlier per `agents/project/ui-patterns.md` ("Flag new UI constructs" when present) and challenge whether existing primitives would suffice.
 8. **Project rule violations** - anything in the plan that conflicts with `/docs` guidelines or established patterns in the codebase.
 9. **Calibration check** - if the plan has confidence buckets, validate them against what you found. A claim labeled "high confidence" that turns out to be wrong is a calibration failure worth flagging; a plan that labels everything "medium" to hedge is also a failure. Note any miscalibration plainly.
+10. **Outcome conformance** - read the plan's **Expected outcome** section against both the phases and the user's original ask quoted in the plan. Flag three failure modes: (a) a bullet that claims an end state the phases do not actually produce, (b) a requirement from the ask that appears nowhere in the outcome and is not listed as deferred or out of scope, and (c) outcome bullets that describe work never specified above (scope creep). If the section is missing entirely, note it and write one in Pass 3 rather than only complaining.
 
 Be specific. "Section 3 is vague" is not useful. "Section 3 says 'update the auth middleware' but there are three middleware files in `src/middleware/auth/` and the plan doesn't say which" is useful.
 
@@ -33,7 +34,7 @@ If the plan surfaces explicit decision points (chosen vs. rejected alternative),
 
 Rewrite the plan incorporating the fixes from Pass 1 and any improvements from Pass 2. The refined plan must:
 
-1. Follow the exact same structure and constraints as `cmd_plan.md` (technical only, no PM sections, concise, file/function references, verified/assumed markers, decision points, confidence buckets, phased only if necessary).
+1. Follow the exact same structure and constraints as `cmd_plan.md` (technical only, no PM sections, concise, file/function references, verified/assumed markers, decision points, expected outcome, confidence buckets, phased only if necessary).
 2. Preserve every critical detail from the original user requirements verbatim where they appeared in the original plan.
 3. Resolve every issue raised in Pass 1, or explicitly note why an issue was left unresolved.
 4. Update verification markers and confidence buckets to reflect what the eval established. References you confirmed move from `[assumed]` to `[verified]`. Claims found to be wrong get fixed and their confidence downgraded or moved to open questions.
